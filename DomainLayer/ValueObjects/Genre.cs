@@ -5,7 +5,16 @@ namespace MoviesProject.DomainLayer.ValueObjects
     public class Genre: IValueObject
     {
 
-        public required string primaryGenre { get; set; }
-        public ICollection<string>? subGenres { get; set; }
+        public string primaryGenre { get; private set; }
+        public ICollection<string>? subGenres { get; private set; }
+        public Genre()
+        {
+
+        }
+        public Genre(string primaryGenre, ICollection<string>? subGenres)
+        {
+            this.primaryGenre = primaryGenre;
+            this.subGenres = subGenres;
+        }
     }
 }

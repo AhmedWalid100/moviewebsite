@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MoviesProject.Infrastructure.MovieDBContext;
 
@@ -12,9 +13,11 @@ using MoviesProject.Infrastructure.MovieDBContext;
 namespace MoviesProject.Migrations
 {
     [DbContext(typeof(MovieDBContext))]
-    partial class MovieDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240213142653_eleventh")]
+    partial class eleventh
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

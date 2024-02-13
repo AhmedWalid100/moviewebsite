@@ -134,3 +134,4 @@ C:\Users\awhamed\source\repos\MoviesProject\MoviesProject\obj\Debug\net8.0\refin
 C:\Users\awhamed\source\repos\MoviesProject\MoviesProject\obj\Debug\net8.0\MoviesProject.pdb
 C:\Users\awhamed\source\repos\MoviesProject\MoviesProject\obj\Debug\net8.0\MoviesProject.genruntimeconfig.cache
 C:\Users\awhamed\source\repos\MoviesProject\MoviesProject\obj\Debug\net8.0\ref\MoviesProject.dll
+C:\Users\awhamed\source\repos\MoviesProject\MoviesProject\obj\Debug\net8.0\MoviesProject.sourcelink.json
