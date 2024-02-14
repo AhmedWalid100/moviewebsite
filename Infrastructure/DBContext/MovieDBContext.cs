@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MoviesProject.DomainLayer.Aggregates;
 
-namespace MoviesProject.Infrastructure.MovieDBContext
+namespace MoviesProject.Infrastructure.DBContext
 {
     public class MovieDBContext :DbContext
     {

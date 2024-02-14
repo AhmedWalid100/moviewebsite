@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MoviesProject.DomainLayer.Aggregates;
 using MoviesProject.DomainLayer.ValueObjects;
-using MoviesProject.Infrastructure.MovieDBContext;
+using MoviesProject.Infrastructure.DBContext;
 
 namespace MoviesProject.Controllers
 {

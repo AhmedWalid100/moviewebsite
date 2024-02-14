@@ -81,6 +81,21 @@ namespace MoviesProject.DomainLayer.Aggregates
             };
             MovieActors.Add(movieActor);
         }
+        public void AddExistingActor(int actorID)
+        {
+            
+            var movieActor = new MovieActor()
+            {
+                MovieID = this.ID,
+                ActorID= actorID
+            };
+            MovieActors.Add(movieActor);
+        }
+        public void RemoveActor(Actor _actor)
+        {
+            var movieActor = MovieActors.FirstOrDefault(x => x.Actor == _actor && x.Movie == this);
+            MovieActors.Remove(movieActor);
+        }
         public void UpdateGenre(string _primarygenre, ICollection<string> _secondarygenres)
         {
             var genre = new Genre(_primarygenre, _secondarygenres);
