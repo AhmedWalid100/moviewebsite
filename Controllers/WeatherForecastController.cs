@@ -33,8 +33,8 @@ namespace MoviesProject.Controllers
                 var actor = context.Actors.FirstOrDefault(a => a.Name == "Amr");
 
 
-                Language language = new Language("Arabic", ["English","French"]);
-                Genre genre = new Genre("Action", ["Drama", "Comedy"]);
+                Language language = new Language("Arabic", "English");
+                Genre genre = new Genre("Action", "Drama");
                 var movie = new Movie("elgezira", "2008", "this is elgezira film", "img.img",
                     language, genre, "102");
 

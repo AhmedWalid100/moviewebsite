@@ -13,8 +13,8 @@ using MoviesProject.Infrastructure.DBContext;
 namespace MoviesProject.Migrations
 {
     [DbContext(typeof(MovieDBContext))]
-    [Migration("20240212144805_second")]
-    partial class second
+    [Migration("20240215123618_nineteen")]
+    partial class nineteen
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,6 +41,7 @@ namespace MoviesProject.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");

@@ -1,8 +1,12 @@
-﻿using MoviesProject.DomainLayer.Aggregates;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
+using MoviesProject.DomainLayer.Aggregates;
 using MoviesProject.DomainLayer.Entity;
 using MoviesProject.DomainLayer.Interfaces;
 using MoviesProject.Infrastructure.DBContext;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MoviesProject.Infrastructure.Repos
 {
@@ -23,23 +27,40 @@ namespace MoviesProject.Infrastructure.Repos
         {
             _context.Movies.Remove(movie);
         }
-        public Movie GetMovie(int id)
+        public Movie? GetMovie(int id)
         {
-            return _context.Movies.Find(id);
+            return _context.Movies.Where(x=>x.ID==id).FirstOrDefault();
         }
         public List<Movie> GetAllMovies()
         {
             return _context.Movies.ToList();
         }
-        public void UpdateMovie(Movie movie)
+        //public void UpdateMovie(Movie movie)
+        //{
+        //    _context.Update<Movie>(movie);
+        //    //_context.SaveChanges();
+        //}
+        public async Task UpdateMovie(int id, Movie movie) //more ideal
         {
-            _context.Update<Movie>(movie);
-            //_context.SaveChanges();
-        }
-        public void UpdateMovie(int id, Movie movie) //more ideal
-        {
-            var oldMovie = GetMovie(id);
-            _context.Entry(oldMovie).CurrentValues.SetValues(movie);
+
+            Movie oldMovie =  _context.Movies.FirstOrDefault(x=>x.ID==id);
+            if (oldMovie != null)
+            {
+                foreach (var property in typeof(Movie).GetProperties())
+                {
+                    if (property.Name != "ID")
+                    {
+                        property.SetValue(oldMovie, property.GetValue(movie));
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("hey");
+            }
+            
+
+
             //_context.SaveChanges();
         }
         public async Task SaveChangesAsync()
@@ -70,10 +91,10 @@ namespace MoviesProject.Infrastructure.Repos
             movie.AddExistingActor(actorID);
             //_context.SaveChanges();
         }
-        public void RemoveActor(int movieID, Actor actor)
+        public void RemoveActor(int movieID, int actorID)
         {
             var movie = _context.Movies.FirstOrDefault(x => x.ID == movieID);
-            movie.RemoveActor(actor);
+            movie.RemoveActor(actorID);
             //_context.SaveChanges();
         }
 

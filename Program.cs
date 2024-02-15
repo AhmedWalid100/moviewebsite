@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using MoviesProject.Application;
 using MoviesProject.DomainLayer.Interfaces;
 using MoviesProject.Infrastructure.DBContext;
 using MoviesProject.Infrastructure.Repos;
@@ -13,7 +14,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<MovieDBContext>(); 
 builder.Services.AddScoped<IMovieRepository,MovieRepository>();
-
+builder.Services.AddScoped<IMovieCommandHandler, MovieCommandHandler>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

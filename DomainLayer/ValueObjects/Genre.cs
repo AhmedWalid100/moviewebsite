@@ -6,12 +6,12 @@ namespace MoviesProject.DomainLayer.ValueObjects
     {
 
         public string primaryGenre { get; private set; }
-        public ICollection<string>? subGenres { get; private set; }
+        public string subGenres { get; private set; }
         public Genre()
         {
 
         }
-        public Genre(string primaryGenre, ICollection<string>? subGenres)
+        public Genre(string primaryGenre, string subGenres)
         {
             this.primaryGenre = primaryGenre;
             this.subGenres = subGenres;

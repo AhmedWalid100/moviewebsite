@@ -11,11 +11,11 @@ namespace MoviesProject.DomainLayer.Interfaces
         void AddMovieCinema(int movieID, Cinema cinema);
         List<Movie> GetAllMovies();
         Movie GetMovie(int id);
-        void RemoveActor(int movieID, Actor actor);
+        void RemoveActor(int movieID, int actorID);
         void RemoveMovie(Movie movie);
         void RemoveMovieCinema(int movieID, Cinema cinema);
         Task SaveChangesAsync();
-        void UpdateMovie(int id, Movie movie);
-        void UpdateMovie(Movie movie);
+        Task UpdateMovie(int id, Movie movie);
+        //void UpdateMovie(Movie movie);
     }
 }

@@ -91,17 +91,17 @@ namespace MoviesProject.DomainLayer.Aggregates
             };
             MovieActors.Add(movieActor);
         }
-        public void RemoveActor(Actor _actor)
+        public void RemoveActor(int actorID)
         {
-            var movieActor = MovieActors.FirstOrDefault(x => x.Actor == _actor && x.Movie == this);
+            var movieActor = MovieActors.FirstOrDefault(x => x.ActorID == actorID && x.MovieID == this.ID);
             MovieActors.Remove(movieActor);
         }
-        public void UpdateGenre(string _primarygenre, ICollection<string> _secondarygenres)
+        public void UpdateGenre(string _primarygenre, string _secondarygenres)
         {
             var genre = new Genre(_primarygenre, _secondarygenres);
             this.Genre = genre;
         }
-        public void UpdateLanguage(string _originallanguage, ICollection<string> _spokenlanguages)
+        public void UpdateLanguage(string _originallanguage, string _spokenlanguages)
         {
             var language = new Language(_originallanguage, _spokenlanguages);
             this.Language = language;
