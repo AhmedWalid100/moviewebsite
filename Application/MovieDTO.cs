@@ -12,8 +12,8 @@ namespace MoviesProject.Application
         public string Description { get; set; }
         public string? Length { get; set; }
         public string PosterURL { get; set; }
-        public LanguageDTO LanguageDTO { get; set; }
-        public GenreDTO GenreDTO { get; set; }
+        public LanguageDTO? LanguageDTO { get; set; }
+        public GenreDTO? GenreDTO { get; set; }
 
     }
 }

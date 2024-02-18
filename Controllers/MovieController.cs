@@ -15,17 +15,20 @@ namespace MoviesProject.Controllers
     {
         public IMovieCommandHandler _moviecommandhandler;
         public MovieDBContext _dbcontext;
-        public MovieController(IMovieCommandHandler moviecommandhandler, MovieDBContext dbContext)
+        public IMovieQueryHandler _moviequeryhandler;
+        public MovieController(IMovieCommandHandler moviecommandhandler, MovieDBContext dbContext, 
+            IMovieQueryHandler moviequeryhandler)
         {
-            _dbcontext=dbContext;
+            _dbcontext = dbContext;
             _moviecommandhandler = moviecommandhandler;
+            _moviequeryhandler = moviequeryhandler;
         }
         // GET: api/<MovieController>
         [HttpGet]
         public async Task<IActionResult> GetAllMovies()
         {
-
-             return Ok(new string[] { "value1", "value2" });
+            var movies= await _moviequeryhandler.GetAllMovies();
+             return Ok(movies);
         }
 
         // GET api/<MovieController>/5
@@ -55,19 +58,8 @@ namespace MoviesProject.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            Movie movie = _dbcontext.Movies.Where(x => x.ID == id).FirstOrDefault();
-            if(movie != null)
-            {
-                _dbcontext.Movies.Remove(movie);
-                _dbcontext.SaveChanges();
-                return Ok();
-                
-            }
-            else
-            {
-                return NotFound();
-            }
-            
+            _moviecommandhandler.DeleteMovieAsync(id);
+            return Ok("Done");
             //_moviecommandhandler.DeleteMovieAsync(id);
         }
     }

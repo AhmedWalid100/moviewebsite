@@ -10,7 +10,7 @@ namespace MoviesProject.DomainLayer.Aggregates
         public int Age { get; private set; }
 
         public string? Bio { get; private set; }
-        public ICollection<MovieActor> MovieActors { get; set; }
+        public ICollection<MovieActor>? MovieActors { get; set; }
 
         public Actor()
         {

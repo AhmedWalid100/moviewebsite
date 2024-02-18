@@ -9,7 +9,7 @@ namespace MoviesProject.DomainLayer.Interfaces
         void AddActor(int movieID, int actorID);
         void AddMovie(Movie movie);
         void AddMovieCinema(int movieID, Cinema cinema);
-        List<Movie> GetAllMovies();
+        Task<List<Movie>> GetAllMovies();
         Movie GetMovie(int id);
         void RemoveActor(int movieID, int actorID);
         void RemoveMovie(Movie movie);

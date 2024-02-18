@@ -14,7 +14,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<MovieDBContext>(); 
 builder.Services.AddScoped<IMovieRepository,MovieRepository>();
+builder.Services.AddScoped<IActorRepository, ActorRepository>();
 builder.Services.AddScoped<IMovieCommandHandler, MovieCommandHandler>();
+builder.Services.AddScoped<IActorCommandHandler, ActorCommandHandler>();
+builder.Services.AddScoped<IMovieQueryHandler, MovieQueryHandler>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

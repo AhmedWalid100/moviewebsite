@@ -31,9 +31,9 @@ namespace MoviesProject.Infrastructure.Repos
         {
             return _context.Movies.Where(x=>x.ID==id).FirstOrDefault();
         }
-        public List<Movie> GetAllMovies()
+        public async Task<List<Movie>> GetAllMovies()
         {
-            return _context.Movies.ToList();
+            return  await _context.Movies.ToListAsync();
         }
         //public void UpdateMovie(Movie movie)
         //{
@@ -98,6 +98,6 @@ namespace MoviesProject.Infrastructure.Repos
             //_context.SaveChanges();
         }
 
-
+      
     }
 }
