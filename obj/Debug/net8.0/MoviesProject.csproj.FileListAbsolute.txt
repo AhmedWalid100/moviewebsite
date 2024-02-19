@@ -135,3 +135,5 @@ C:\Users\awhamed\source\repos\MoviesProject\MoviesProject\obj\Debug\net8.0\Movie
 C:\Users\awhamed\source\repos\MoviesProject\MoviesProject\obj\Debug\net8.0\MoviesProject.genruntimeconfig.cache
 C:\Users\awhamed\source\repos\MoviesProject\MoviesProject\obj\Debug\net8.0\ref\MoviesProject.dll
 C:\Users\awhamed\source\repos\MoviesProject\MoviesProject\obj\Debug\net8.0\MoviesProject.sourcelink.json
+C:\Users\awhamed\source\repos\MoviesProject\MoviesProject\bin\Debug\net8.0\AutoMapper.dll
+C:\Users\awhamed\source\repos\MoviesProject\MoviesProject\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

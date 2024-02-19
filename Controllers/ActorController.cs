@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MoviesProject.Application;
+using MoviesProject.Application.Commands;
 using MoviesProject.DomainLayer.Interfaces;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -11,36 +12,39 @@ namespace MoviesProject.Controllers
     public class ActorController : ControllerBase
     {
         public IActorCommandHandler _actorCommandHandler;
-        public ActorController(IActorCommandHandler actorCommandHandler) {
+        public IActorQueryHandler _actorQueryHandler;
+        public ActorController(IActorCommandHandler actorCommandHandler, IActorQueryHandler actorQueryHandler = null)
+        {
 
             _actorCommandHandler = actorCommandHandler;
+            _actorQueryHandler = actorQueryHandler;
         }
         // GET: api/<ActorController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            return Ok(_actorQueryHandler.GetAllActors());
         }
 
         // GET api/<ActorController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            return Ok(_actorQueryHandler.GetActorById(id));
         }
 
         // POST api/<ActorController>
         [HttpPost]
-        public async Task Post([FromBody] ActorDTO actor)
+        public async Task Post([FromBody] ActorCreateCommand actorCommand)
         {
-           await _actorCommandHandler.CreateActor(actor);
+           await _actorCommandHandler.CreateActor(actorCommand);
         }
 
         // PUT api/<ActorController>/5
         [HttpPut("{id}")]
-        public async Task Put(int id, [FromBody] ActorDTO actor)
+        public async Task Put(int id, [FromBody] ActorCreateCommand actorCommand)
         {
-            await _actorCommandHandler.UpdateActor(id, actor);
+            await _actorCommandHandler.UpdateActor(id, actorCommand);
         }
 
         // DELETE api/<ActorController>/5

@@ -10,6 +10,8 @@ namespace MoviesProject.DomainLayer.Aggregates
         public int Age { get; private set; }
 
         public string? Bio { get; private set; }
+
+        public string? PosterURL { get; private set; }
         public ICollection<MovieActor>? MovieActors { get; set; }
 
         public Actor()
@@ -18,11 +20,12 @@ namespace MoviesProject.DomainLayer.Aggregates
         }
 
         [SetsRequiredMembers]
-        public Actor(string _name, int _age, string _bio)
+        public Actor(string _name, int _age, string _bio, string posterURL)
         {
             Name = _name;
             Age = _age;
             Bio = _bio;
+            PosterURL = posterURL;
         }
     }
 }

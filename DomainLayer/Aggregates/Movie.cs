@@ -2,6 +2,7 @@
 using MoviesProject.DomainLayer.Interfaces;
 using MoviesProject.DomainLayer.ValueObjects;
 using System.Diagnostics.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
 
 namespace MoviesProject.DomainLayer.Aggregates
 {
@@ -60,9 +61,9 @@ namespace MoviesProject.DomainLayer.Aggregates
             var cinema = new Cinema(_name, _address);
             Cinemas.Add(cinema);
         }
-        public void AddNewActor(string _name, int _age, string? _bio="")
+        public void AddNewActor(string _name, int _age, string _bio, string _posterURL)
         {
-            var actor = new Actor(_name, _age,_bio);
+            var actor = new Actor(_name, _age, _bio, _posterURL);
             var movieActor = new MovieActor()
             {
                 Movie=this,
@@ -93,7 +94,7 @@ namespace MoviesProject.DomainLayer.Aggregates
         }
         public void RemoveActor(int actorID)
         {
-            var movieActor = MovieActors.FirstOrDefault(x => x.ActorID == actorID && x.MovieID == this.ID);
+            var movieActor = MovieActors.Where(x => x.ActorID == actorID && x.MovieID == this.ID).FirstOrDefault();
             MovieActors.Remove(movieActor);
         }
         public void UpdateGenre(string _primarygenre, string _secondarygenres)

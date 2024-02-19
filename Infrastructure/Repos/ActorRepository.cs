@@ -20,6 +20,10 @@ namespace MoviesProject.Infrastructure.Repos
         {
             _context.Actors.Remove(actor);
         }
+        public List<Actor> GetActors()
+        {
+            return _context.Actors.ToList();
+        }
 
         public Actor GetActor(int id)
         {

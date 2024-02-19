@@ -1,4 +1,5 @@
 ﻿using MoviesProject.Application;
+using MoviesProject.Application.Commands;
 
 namespace MoviesProject.DomainLayer.Interfaces
 {
@@ -6,9 +7,9 @@ namespace MoviesProject.DomainLayer.Interfaces
     {
         Task AddCinema(int movieID, CinemaDTO cinemaDTO);
         Task AddMovieActor(int movieID, int actorID);
-        Task CreateMovieAsync(MovieDTO movieDTO);
+        Task CreateMovieAsync(MovieCreateCommand movieCommand);
         Task DeleteMovieAsync(int id);
         Task RemoveMovieActor(int movieID, int actorID);
-        Task UpdateMovieDetails(int id, MovieDTO movieDTO);
+        Task UpdateMovieDetails(int id, MovieCreateCommand movieCommand);
     }
 }

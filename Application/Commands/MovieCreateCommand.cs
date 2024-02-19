@@ -1,12 +1,7 @@
-﻿using MoviesProject.DomainLayer.Aggregates;
-using MoviesProject.DomainLayer.Entity;
-using MoviesProject.DomainLayer.ValueObjects;
-
-namespace MoviesProject.Application
+﻿namespace MoviesProject.Application.Commands
 {
-    public class MovieDTO
+    public class MovieCreateCommand
     {
-        public int ID { get; set; }
         public string Title { get; set; }
         public string releaseDate { get; set; }
         public string Description { get; set; }
@@ -14,6 +9,5 @@ namespace MoviesProject.Application
         public string PosterURL { get; set; }
         public LanguageDTO? LanguageDTO { get; set; }
         public GenreDTO? GenreDTO { get; set; }
-
     }
 }

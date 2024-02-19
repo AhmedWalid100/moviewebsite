@@ -12,12 +12,16 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddDbContext<MovieDBContext>(); 
 builder.Services.AddScoped<IMovieRepository,MovieRepository>();
 builder.Services.AddScoped<IActorRepository, ActorRepository>();
+builder.Services.AddScoped<IMovieActorRepository, MovieActorRepository>();
 builder.Services.AddScoped<IMovieCommandHandler, MovieCommandHandler>();
 builder.Services.AddScoped<IActorCommandHandler, ActorCommandHandler>();
 builder.Services.AddScoped<IMovieQueryHandler, MovieQueryHandler>();
+builder.Services.AddScoped<IActorQueryHandler, ActorQueryHandler>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

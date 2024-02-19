@@ -9,5 +9,7 @@ namespace MoviesProject.DomainLayer.Interfaces
         void RemoveActor(Actor actor);
         Task SaveChangesAsync();
         void UpdateActor(int id, Actor actor);
+
+        List<Actor> GetActors();
     }
 }
