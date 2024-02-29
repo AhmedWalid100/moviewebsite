@@ -10,26 +10,37 @@ using MoviesProject.Infrastructure.DBContext;
 
 namespace MoviesProject.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class MovieController : ControllerBase
+    
+    public class MovieController : BaseController
     {
         public IMovieCommandHandler _moviecommandhandler;
-        public MovieDBContext _dbcontext;
+        //public MovieDBContext _dbcontext;
         public IMovieQueryHandler _moviequeryhandler;
-        public MovieController(IMovieCommandHandler moviecommandhandler, MovieDBContext dbContext, 
+        public MovieController(IMovieCommandHandler moviecommandhandler, //MovieDBContext dbContext, 
             IMovieQueryHandler moviequeryhandler)
         {
-            _dbcontext = dbContext;
+            //_dbcontext = dbContext;
             _moviecommandhandler = moviecommandhandler;
             _moviequeryhandler = moviequeryhandler;
         }
         // GET: api/<MovieController>
         [HttpGet]
-        public async Task<IActionResult> GetAllMovies()
+        public async Task<IActionResult> GetAllMovies(int page=1, int pageSize=5,
+            string? searchTitle=null, string? searchGenre=null, string orderColumn = "id" , string orderBy = "asc")
         {
-            var movies= await _moviequeryhandler.GetAllMovies();
-             return Ok(movies);
+            var movies = await _moviequeryhandler.GetAllMoviesAfterOperations(page, pageSize, searchTitle,
+                searchGenre, orderColumn, orderBy);
+            return Ok(movies);
+        }
+
+        [HttpGet("GetAllMoviesByPage")]
+        public async Task<IActionResult> GetAllMoviesPaginated(int page = 1, int pageSize = 5,
+            string? searchTitle = null, string? searchGenre = null, string orderColumn = "id", string orderBy = "asc")
+        {
+            var movies = await _moviequeryhandler.GetAllMoviesAfterOperations(page, pageSize,searchTitle,
+                searchGenre,orderColumn,orderBy);
+            //throw new Exception("Exception test 1");
+            return Ok(movies);
         }
 
         // GET api/<MovieController>/5
@@ -47,6 +58,8 @@ namespace MoviesProject.Controllers
             await _moviecommandhandler.CreateMovieAsync(movieCommand);
             return Ok();
         }
+
+
 
         // PUT api/<MovieController>/5
         [HttpPut("{id}")]

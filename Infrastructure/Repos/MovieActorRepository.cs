@@ -51,5 +51,11 @@ namespace MoviesProject.Infrastructure.Repos
                 }).ToList();
             return movies;
         }
+        public void RemoveMovieActor(int movieID, int actorID)
+        {
+           MovieActor removedMovie= _dbcontext.MoviesActors.Where(x => x.MovieID == movieID && x.ActorID == actorID)
+                .FirstOrDefault();
+            _dbcontext.MoviesActors.Remove(removedMovie);
+        }
     }
 }

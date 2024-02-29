@@ -6,5 +6,7 @@ namespace MoviesProject.DomainLayer.Interfaces
     {
         List<ActorDTO> GetMovieActorsByMovieID(int movieID);
         List<MovieDTO> GetMoviesByActorID(int actorID);
+
+        void RemoveMovieActor(int movieID, int actorID);
     }
 }

@@ -11,10 +11,13 @@ namespace MoviesProject.Application
     {
         public IMovieRepository _movierepository;
         public IMapper _mapper;
-        public MovieCommandHandler(IMovieRepository movierepository, IMapper mapper)
+        public IMovieActorRepository _movieActorRepository;
+        public MovieCommandHandler(IMovieRepository movierepository, IMapper mapper
+            , IMovieActorRepository movieActorRepository)
         {
             _movierepository = movierepository;
             _mapper = mapper;
+            _movieActorRepository = movieActorRepository;
         }
         public async Task CreateMovieAsync(MovieCreateCommand movieCommand)
         {
@@ -50,7 +53,7 @@ namespace MoviesProject.Application
         }
         public async Task RemoveMovieActor(int movieID, int actorID)
         {
-            _movierepository.RemoveActor(movieID, actorID);
+            _movieActorRepository.RemoveMovieActor(movieID, actorID);
             await _movierepository.SaveChangesAsync();
         }
         public async Task AddCinema(int movieID, CinemaDTO cinemaDTO)

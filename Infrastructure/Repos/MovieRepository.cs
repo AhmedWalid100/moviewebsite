@@ -31,9 +31,59 @@ namespace MoviesProject.Infrastructure.Repos
         {
             return _context.Movies.Where(x=>x.ID==id).FirstOrDefault();
         }
-        public async Task<List<Movie>> GetAllMovies()
+        public async Task<ReturnedCountAndData<Movie>> GetAllMovies(int page, int pageSize,
+            string? searchTitle, string? searchGenre, string orderColumn, string orderBy)
         {
-            return  await _context.Movies.ToListAsync();
+
+
+            var movies = _context.Movies.AsQueryable();
+
+            if (searchTitle is not null)
+            {
+                movies = movies.Where(m => m.Title.ToLower().Contains(searchTitle.ToLower()));
+            }
+            if (searchGenre is not null)
+            {
+                movies = movies.Where(m => m.Genre.primaryGenre.ToLower().Equals(searchGenre.ToLower()));
+            }
+            var count = movies.Count();
+            if (orderBy.ToLower() == "asc")
+            {
+                if (orderColumn.ToLower() == "id")
+                {
+                    movies = movies.OrderBy(m => m.ID);
+                }
+                if (orderColumn.ToLower() == "title")
+                {
+                    movies = movies.OrderBy(m => m.Title);
+                }
+                if (orderColumn.ToLower() == "releasedate")
+                {
+                    movies = movies.OrderBy(m => m.releaseDate);
+                }
+            }
+            if (orderBy.ToLower() == "desc")
+            {
+                if (orderColumn.ToLower() == "id")
+                {
+                    movies = movies.OrderByDescending(m => m.ID);
+                }
+                if (orderColumn.ToLower() == "title")
+                {
+                    movies = movies.OrderByDescending(m => m.Title);
+                }
+                if (orderColumn.ToLower() == "releasedate")
+                {
+                    movies = movies.OrderByDescending(m => m.releaseDate);
+                }
+            }
+
+            var returnedMovies = movies.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            ReturnedCountAndData<Movie> returnedData = new ReturnedCountAndData<Movie>{ count=count,data=returnedMovies};
+
+
+            return returnedData;
         }
         //public void UpdateMovie(Movie movie)
         //{

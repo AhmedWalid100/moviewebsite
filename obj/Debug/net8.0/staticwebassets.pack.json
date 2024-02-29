@@ -1,0 +1,45 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\awhamed\\source\\repos\\MoviesProject\\MoviesProject\\wwwroot\\uploads\\images\\1111eaf5-d0bc-48cf-a66b-25f6919ec0a2\\image.jpg",
+      "PackagePath": "staticwebassets\\uploads\\images\\1111eaf5-d0bc-48cf-a66b-25f6919ec0a2\\image.jpg"
+    },
+    {
+      "Id": "C:\\Users\\awhamed\\source\\repos\\MoviesProject\\MoviesProject\\wwwroot\\uploads\\images\\476ced5c-931b-451e-bc9f-872bd639c88c\\image.jpg",
+      "PackagePath": "staticwebassets\\uploads\\images\\476ced5c-931b-451e-bc9f-872bd639c88c\\image.jpg"
+    },
+    {
+      "Id": "C:\\Users\\awhamed\\source\\repos\\MoviesProject\\MoviesProject\\wwwroot\\uploads\\images\\527cb4ac-3cb0-4d9b-a58b-0f259faca462\\image.jpg",
+      "PackagePath": "staticwebassets\\uploads\\images\\527cb4ac-3cb0-4d9b-a58b-0f259faca462\\image.jpg"
+    },
+    {
+      "Id": "C:\\Users\\awhamed\\source\\repos\\MoviesProject\\MoviesProject\\wwwroot\\uploads\\images\\7189e3ad-1082-45a5-8dbc-bf33a0a15fac\\image.jpg",
+      "PackagePath": "staticwebassets\\uploads\\images\\7189e3ad-1082-45a5-8dbc-bf33a0a15fac\\image.jpg"
+    },
+    {
+      "Id": "C:\\Users\\awhamed\\source\\repos\\MoviesProject\\MoviesProject\\wwwroot\\uploads\\images\\7d1d7599-1778-46f1-97e0-eec9f66caedf\\image.jpg",
+      "PackagePath": "staticwebassets\\uploads\\images\\7d1d7599-1778-46f1-97e0-eec9f66caedf\\image.jpg"
+    },
+    {
+      "Id": "C:\\Users\\awhamed\\source\\repos\\MoviesProject\\MoviesProject\\wwwroot\\uploads\\images\\ebbc6827-24e9-4aea-8548-a8e67e8e437a\\image.jpg",
+      "PackagePath": "staticwebassets\\uploads\\images\\ebbc6827-24e9-4aea-8548-a8e67e8e437a\\image.jpg"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.MoviesProject.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.MoviesProject.props",
+      "PackagePath": "build\\MoviesProject.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.MoviesProject.props",
+      "PackagePath": "buildMultiTargeting\\MoviesProject.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.MoviesProject.props",
+      "PackagePath": "buildTransitive\\MoviesProject.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

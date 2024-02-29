@@ -94,7 +94,7 @@ namespace MoviesProject.DomainLayer.Aggregates
         }
         public void RemoveActor(int actorID)
         {
-            var movieActor = MovieActors.Where(x => x.ActorID == actorID && x.MovieID == this.ID).FirstOrDefault();
+            var movieActor = MovieActors.FirstOrDefault();
             MovieActors.Remove(movieActor);
         }
         public void UpdateGenre(string _primarygenre, string _secondarygenres)
