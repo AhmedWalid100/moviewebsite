@@ -51,8 +51,8 @@ namespace MoviesProject.Controllers
             {
                 await formFile.CopyToAsync(stream);
             }
-            string sentImagePath = "./assets/movie-images/"+uniqueID;
-            return Ok(sentImagePath);
+            string sentImagePath = "./assets/movie-images/"+uniqueID+".jpg";
+            return Ok("\"" + sentImagePath + "\"");
         }
 
         // PUT api/<ImagesController>/5

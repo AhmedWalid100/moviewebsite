@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MoviesProject.Application.Commands;
+using MoviesProject.Application.ResponseModels;
 using MoviesProject.DomainLayer.Aggregates;
 using MoviesProject.DomainLayer.Interfaces;
 
@@ -15,11 +16,18 @@ namespace MoviesProject.Application
             _actorrepository = actorrepository;
             _mapper = mapper;
         }
-        public async Task CreateActor(ActorCreateCommand actorCommand)
+        public async Task<CreateResponse<Actor>> CreateActor(ActorCreateCommand actorCommand)
         {
             var actor=_mapper.Map<Actor>(actorCommand);
             _actorrepository.AddActor(actor);
             await _actorrepository.SaveChangesAsync();
+            var createResponse = new CreateResponse<Actor>()
+            {
+                isSuccess = true,
+                message = "Actor has been created successfully",
+                data = actor,
+            };
+            return createResponse;
         }
         public async Task RemoveActor(int id)
         {

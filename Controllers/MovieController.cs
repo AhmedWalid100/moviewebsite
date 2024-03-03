@@ -4,6 +4,7 @@ using MoviesProject.Application.Commands;
 using MoviesProject.DomainLayer.Aggregates;
 using MoviesProject.DomainLayer.Interfaces;
 using MoviesProject.Infrastructure.DBContext;
+using System.ComponentModel.DataAnnotations;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -25,7 +26,7 @@ namespace MoviesProject.Controllers
         }
         // GET: api/<MovieController>
         [HttpGet]
-        public async Task<IActionResult> GetAllMovies(int page=1, int pageSize=5,
+        public async Task<IActionResult> GetAllMovies([Range(1, int.MaxValue)] int page =1, int pageSize=5,
             string? searchTitle=null, string? searchGenre=null, string orderColumn = "id" , string orderBy = "asc")
         {
             var movies = await _moviequeryhandler.GetAllMoviesAfterOperations(page, pageSize, searchTitle,
@@ -34,12 +35,12 @@ namespace MoviesProject.Controllers
         }
 
         [HttpGet("GetAllMoviesByPage")]
-        public async Task<IActionResult> GetAllMoviesPaginated(int page = 1, int pageSize = 5,
+        public async Task<IActionResult> GetAllMoviesPaginated([Range(1, int.MaxValue)] int page = 1, int pageSize = 5,
             string? searchTitle = null, string? searchGenre = null, string orderColumn = "id", string orderBy = "asc")
         {
             var movies = await _moviequeryhandler.GetAllMoviesAfterOperations(page, pageSize,searchTitle,
                 searchGenre,orderColumn,orderBy);
-            //throw new Exception("Exception test 1");
+            //throw new Exception("Exception test 9999091");
             return Ok(movies);
         }
 

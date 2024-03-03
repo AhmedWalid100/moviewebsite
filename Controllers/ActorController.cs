@@ -2,6 +2,7 @@
 using MoviesProject.Application;
 using MoviesProject.Application.Commands;
 using MoviesProject.DomainLayer.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -21,9 +22,10 @@ namespace MoviesProject.Controllers
         }
         // GET: api/<ActorController>
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get([Range(1, int.MaxValue)] int page = 1, int pageSize = 5,
+            string? searchName = null, string orderColumn = "id", string orderBy = "asc")
         {
-            return Ok(_actorQueryHandler.GetAllActors());
+            return Ok(_actorQueryHandler.GetAllActors(page, pageSize, searchName, orderColumn, orderBy));
         }
 
         // GET api/<ActorController>/5
@@ -35,9 +37,10 @@ namespace MoviesProject.Controllers
 
         // POST api/<ActorController>
         [HttpPost]
-        public async Task Post([FromBody] ActorCreateCommand actorCommand)
+        public async Task<IActionResult> Post([FromBody] ActorCreateCommand actorCommand)
         {
-           await _actorCommandHandler.CreateActor(actorCommand);
+           var actor= await _actorCommandHandler.CreateActor(actorCommand);
+            return Ok(actor);
         }
 
         // PUT api/<ActorController>/5

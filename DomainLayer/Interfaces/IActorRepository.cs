@@ -1,4 +1,5 @@
 ﻿using MoviesProject.DomainLayer.Aggregates;
+using MoviesProject.Infrastructure.Repos;
 
 namespace MoviesProject.DomainLayer.Interfaces
 {
@@ -10,6 +11,7 @@ namespace MoviesProject.DomainLayer.Interfaces
         Task SaveChangesAsync();
         void UpdateActor(int id, Actor actor);
 
-        List<Actor> GetActors();
+        ReturnedCountAndData<Actor> GetActors(int page, int pageSize,
+            string? searchName, string orderColumn, string orderBy);
     }
 }

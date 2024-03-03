@@ -20,9 +20,44 @@ namespace MoviesProject.Infrastructure.Repos
         {
             _context.Actors.Remove(actor);
         }
-        public List<Actor> GetActors()
+        public ReturnedCountAndData<Actor> GetActors(int page, int pageSize,
+            string? searchName, string orderColumn, string orderBy)
         {
-            return _context.Actors.ToList();
+            var actors= _context.Actors.AsQueryable();
+            if(searchName is not null)
+            {
+                actors = actors.Where(a => a.Name.ToLower().Contains(searchName.ToLower()));
+            }
+            var count = actors.Count();
+            if (orderBy.ToLower() == "asc")
+            {
+                if (orderColumn.ToLower() == "id")
+                {
+                    actors = actors.OrderBy(m => m.ID);
+                }
+                if (orderColumn.ToLower() == "name")
+                {
+                    actors = actors.OrderBy(m => m.Name);
+                }
+            }
+            if (orderBy.ToLower() == "desc")
+            {
+                if (orderColumn.ToLower() == "id")
+                {
+                    actors = actors.OrderByDescending(m => m.ID);
+                }
+                if (orderColumn.ToLower() == "name")
+                {
+                    actors = actors.OrderByDescending(m => m.Name);
+                }
+            }
+            var returnedactors= actors.Skip((page-1)*pageSize).Take(pageSize).ToList();
+            var returnedData = new ReturnedCountAndData<Actor>()
+            {
+                count = count,
+                data = returnedactors
+            };
+            return returnedData;
         }
 
         public Actor GetActor(int id)

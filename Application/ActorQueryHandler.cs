@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MoviesProject.DomainLayer.Interfaces;
+using MoviesProject.Infrastructure.Repos;
 
 namespace MoviesProject.Application
 {
@@ -15,11 +16,18 @@ namespace MoviesProject.Application
             _mapper = mapper;
             _movieActorRepository = movieActorRepository;
         }
-        public List<ActorDTO> GetAllActors()
+        public ReturnedCountAndData<ActorDTO> GetAllActors(int page, int pageSize,
+            string? searchName, string orderColumn, string orderBy)
         {
-            var actors = _actorrepository.GetActors();
-            var actorsDTO = actors.Select(actor => _mapper.Map<ActorDTO>(actor)).ToList();
-            return actorsDTO;
+            var actors = _actorrepository.GetActors(page, pageSize,
+            searchName,  orderColumn,orderBy);
+            var actorsDTO = actors.data.Select(actor => _mapper.Map<ActorDTO>(actor)).ToList();
+            var returnedData = new ReturnedCountAndData<ActorDTO>()
+            {
+                count = actors.count,
+                data = actorsDTO
+            };
+            return returnedData;
         }
         public ActorDTO GetActorById(int id)
         {

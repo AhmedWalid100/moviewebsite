@@ -27,11 +27,11 @@ namespace MoviesProject.Extensions
         {
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-
+            
             await context.Response.WriteAsync(new ErrorDetails()
             {
                 statusCode = context.Response.StatusCode,
-                message = "Error Handling test sending in response body"
+                message = exception.Message
             }.ToString());
         }
     }

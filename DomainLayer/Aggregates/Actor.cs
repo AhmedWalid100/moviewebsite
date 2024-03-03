@@ -27,5 +27,10 @@ namespace MoviesProject.DomainLayer.Aggregates
             Bio = _bio;
             PosterURL = posterURL;
         }
+
+        public static explicit operator List<object>(Actor v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
