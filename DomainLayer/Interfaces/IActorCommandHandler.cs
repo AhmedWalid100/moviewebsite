@@ -7,7 +7,7 @@ namespace MoviesProject.DomainLayer.Interfaces
 {
     public interface IActorCommandHandler
     {
-        Task<CreateResponse<Actor>> CreateActor(ActorCreateCommand actorCommand);
+        Task<CreateResponse<ActorDTO>> CreateActor(ActorCreateCommand actorCommand);
         Task RemoveActor(int id);
         Task UpdateActor(int id, ActorCreateCommand actorCommand);
 

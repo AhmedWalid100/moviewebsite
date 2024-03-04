@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MoviesProject.Application.Commands;
+using MoviesProject.Application.ResponseModels;
 using MoviesProject.DomainLayer.Aggregates;
 using MoviesProject.DomainLayer.Entity;
 using MoviesProject.DomainLayer.Interfaces;
@@ -19,7 +20,7 @@ namespace MoviesProject.Application
             _mapper = mapper;
             _movieActorRepository = movieActorRepository;
         }
-        public async Task CreateMovieAsync(MovieCreateCommand movieCommand)
+        public async Task<CreateResponse<MovieDTO>> CreateMovieAsync(MovieCreateCommand movieCommand)
         {
             var movie=_mapper.Map<Movie>(movieCommand);
             //var language = new Language(movieDTO.LanguageDTO.originalLanguage, movieDTO.LanguageDTO.spokenLanguages);
@@ -28,7 +29,14 @@ namespace MoviesProject.Application
             //    movieDTO.PosterURL, language, genre, movieDTO.Length);
             _movierepository.AddMovie(movie);
             await _movierepository.SaveChangesAsync();
-
+            var returnedMovie = _mapper.Map<MovieDTO>(movie);
+            CreateResponse<MovieDTO> response = new CreateResponse<MovieDTO>()
+            {
+                isSuccess = true,
+                message = "Movie has been created successfully",
+                data = returnedMovie
+            };
+            return response;
         }
         public async Task DeleteMovieAsync(int id)
         {

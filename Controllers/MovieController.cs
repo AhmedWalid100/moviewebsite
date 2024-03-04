@@ -56,8 +56,8 @@ namespace MoviesProject.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] MovieCreateCommand movieCommand)
         {
-            await _moviecommandhandler.CreateMovieAsync(movieCommand);
-            return Ok();
+            var movie =await _moviecommandhandler.CreateMovieAsync(movieCommand);
+            return Ok(movie);
         }
 
 

@@ -16,18 +16,19 @@ namespace MoviesProject.Application
             _actorrepository = actorrepository;
             _mapper = mapper;
         }
-        public async Task<CreateResponse<Actor>> CreateActor(ActorCreateCommand actorCommand)
+        public async Task<CreateResponse<ActorDTO>> CreateActor(ActorCreateCommand actorCommand)
         {
             var actor=_mapper.Map<Actor>(actorCommand);
             _actorrepository.AddActor(actor);
             await _actorrepository.SaveChangesAsync();
-            var createResponse = new CreateResponse<Actor>()
+            var returnedActor = _mapper.Map<ActorDTO>(actor);
+            var response = new CreateResponse<ActorDTO>()
             {
                 isSuccess = true,
                 message = "Actor has been created successfully",
-                data = actor,
+                data = returnedActor,
             };
-            return createResponse;
+            return response;
         }
         public async Task RemoveActor(int id)
         {

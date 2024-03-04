@@ -36,22 +36,22 @@ namespace MoviesProject.Controllers
         public async Task<IActionResult> UploadMovieImageAsync(IFormFile formFile)
         {
             var uniqueID = Guid.NewGuid();
-            //string filePath = this._environment.WebRootPath + "\\uploads\\images\\" + uniqueID;
-            //if(!System.IO.Directory.Exists(filePath))
-            //{
-            //    System.IO.Directory.CreateDirectory(filePath);
-            //}
-            //string imagePath = filePath + "\\image" + ".jpg";
-            string imagePath = "D:\\movies-frontend\\moviewebsite-frontend\\src\\assets\\movie-images\\" + uniqueID + ".jpg";
-            //if (System.IO.File.Exists(imagePath))
-            //{
-            //    System.IO.File.Delete(imagePath);
-            //}
+            string filePath = this._environment.WebRootPath + "\\uploads\\images\\" + uniqueID;
+            if (!System.IO.Directory.Exists(filePath))
+            {
+                System.IO.Directory.CreateDirectory(filePath);
+            }
+            string imagePath = filePath + "\\image" + ".jpg";
+            //string imagePath = "D:\\movies-frontend\\moviewebsite-frontend\\src\\assets\\movie-images\\" + uniqueID + ".jpg";
+            if (System.IO.File.Exists(imagePath))
+            {
+                System.IO.File.Delete(imagePath);
+            }
             using (FileStream stream = System.IO.File.Create(imagePath))
             {
                 await formFile.CopyToAsync(stream);
             }
-            string sentImagePath = "./assets/movie-images/"+uniqueID+".jpg";
+            string sentImagePath = "https://localhost:7181/uploads/images/" + uniqueID+"/image.jpg";
             return Ok("\"" + sentImagePath + "\"");
         }
 
