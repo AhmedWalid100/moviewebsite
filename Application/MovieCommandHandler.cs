@@ -44,7 +44,7 @@ namespace MoviesProject.Application
             _movierepository.RemoveMovie(movie);
             await _movierepository.SaveChangesAsync();
         }
-        public async Task UpdateMovieDetails(int id, MovieCreateCommand movieCommand)
+        public async Task<CreateResponse<int>> UpdateMovieDetails(int id, MovieCreateCommand movieCommand)
         {
             var movie=_mapper.Map<Movie>(movieCommand);
             //var language = new Language(movieDTO.LanguageDTO.originalLanguage, movieDTO.LanguageDTO.spokenLanguages);
@@ -53,6 +53,13 @@ namespace MoviesProject.Application
             //    movieDTO.PosterURL, language, genre, movieDTO.Length);
             await _movierepository.UpdateMovie(id, movie);
             await _movierepository.SaveChangesAsync();
+            CreateResponse<int> response = new CreateResponse<int>()
+            {
+                isSuccess = true,
+                message = "Updated successfully",
+                data = id
+            };
+            return response;
         }
         public async Task AddMovieActor(int movieID, int actorID)
         {

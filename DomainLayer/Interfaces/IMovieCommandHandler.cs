@@ -11,6 +11,6 @@ namespace MoviesProject.DomainLayer.Interfaces
         Task<CreateResponse<MovieDTO>> CreateMovieAsync(MovieCreateCommand movieCommand);
         Task DeleteMovieAsync(int id);
         Task RemoveMovieActor(int movieID, int actorID);
-        Task UpdateMovieDetails(int id, MovieCreateCommand movieCommand);
+        Task<CreateResponse<int>> UpdateMovieDetails(int id, MovieCreateCommand movieCommand);
     }
 }

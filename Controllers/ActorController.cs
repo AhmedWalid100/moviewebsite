@@ -56,5 +56,11 @@ namespace MoviesProject.Controllers
         {
             await _actorCommandHandler.RemoveActor(id);
         }
+        [HttpGet("GetMoviesByActorID/{id}")]
+        public  IActionResult GetMoviesByActorID(int id)
+        {
+            var movies =  _actorQueryHandler.GetMoviesByActorID(id);
+            return Ok(movies);
+        }
     }
 }

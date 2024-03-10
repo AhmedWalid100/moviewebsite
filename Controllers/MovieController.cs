@@ -66,8 +66,8 @@ namespace MoviesProject.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] MovieCreateCommand movie)
         {
-            await _moviecommandhandler.UpdateMovieDetails(id , movie);
-            return Ok("Done");
+            var response=await _moviecommandhandler.UpdateMovieDetails(id , movie);
+            return Ok(response);
         }
 
         // DELETE api/<MovieController>/5
@@ -75,14 +75,14 @@ namespace MoviesProject.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             await _moviecommandhandler.DeleteMovieAsync(id);
-            return Ok("Done");
+            return Ok("\"" + "Success" + "\"");
             //_moviecommandhandler.DeleteMovieAsync(id);
         }
         [HttpPut("AddActorToMovie")]
         public async Task<IActionResult> AddActorToMovie(int movieID, int actorID)
         {
             await _moviecommandhandler.AddMovieActor(movieID, actorID);
-            return Ok("Done");
+            return Ok("\"" + "Success" + "\"");
         }
         [HttpGet("GetMovieActors/{id}")]
         public IActionResult GetActorsByMovieID(int id)
@@ -91,10 +91,10 @@ namespace MoviesProject.Controllers
             return Ok(actors);
         }
         [HttpDelete("DeleteMovieActor")]
-        public async Task DeleteMovieActor(int movieID, int actorID)
+        public async Task<IActionResult> DeleteMovieActor(int movieID, int actorID)
         {
             await _moviecommandhandler.RemoveMovieActor(movieID, actorID);
-            //return Ok("Done");
+            return Ok("\"" + "Success" + "\"");
         }
 
     }

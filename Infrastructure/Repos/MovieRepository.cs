@@ -106,7 +106,7 @@ namespace MoviesProject.Infrastructure.Repos
             }
             else
             {
-                Console.WriteLine("hey");
+                throw new Exception("Movie does not exist.");
             }
             
 
