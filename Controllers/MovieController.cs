@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MoviesProject.Application;
 using MoviesProject.Application.Commands;
 using MoviesProject.DomainLayer.Aggregates;

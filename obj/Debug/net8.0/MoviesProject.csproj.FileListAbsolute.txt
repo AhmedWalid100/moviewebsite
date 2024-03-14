@@ -144,3 +144,6 @@ C:\Users\awhamed\source\repos\MoviesProject\MoviesProject\bin\Debug\net8.0\Micro
 C:\Users\awhamed\source\repos\MoviesProject\MoviesProject\bin\Debug\net8.0\Microsoft.Extensions.Identity.Core.dll
 C:\Users\awhamed\source\repos\MoviesProject\MoviesProject\bin\Debug\net8.0\Microsoft.Extensions.Identity.Stores.dll
 C:\Users\awhamed\source\repos\MoviesProject\MoviesProject\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+C:\Users\awhamed\source\repos\MoviesProject\MoviesProject\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\awhamed\source\repos\MoviesProject\MoviesProject\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.UI.dll
+C:\Users\awhamed\source\repos\MoviesProject\MoviesProject\bin\Debug\net8.0\Microsoft.Extensions.FileProviders.Embedded.dll

@@ -1,6 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using MoviesProject.Config;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,12 +18,14 @@ namespace MoviesProject.Controllers
         UserManager<IdentityUser> userManager;
         SignInManager<IdentityUser> signInManager;
         private readonly IHttpContextAccessor httpContextAccessor;
+        JwtConfig _jwtConfig;
         public AuthController(SignInManager<IdentityUser> _signInManager,
-            UserManager<IdentityUser> _userManager, IHttpContextAccessor _httpContextAccessor) {
+            UserManager<IdentityUser> _userManager, IHttpContextAccessor _httpContextAccessor, 
+            IOptionsMonitor<JwtConfig> _optionsMonitor) {
             userManager = _userManager;
             signInManager = _signInManager;
             httpContextAccessor = _httpContextAccessor;
-            
+            _jwtConfig = _optionsMonitor.CurrentValue;
         }
         // GET: api/<AuthController>
         [HttpGet("auth/logout")]
@@ -44,18 +51,31 @@ namespace MoviesProject.Controllers
             if (form.Password != form.ConfirmPassword) {
                 return BadRequest();
             }
+            var emailExist= await userManager.FindByEmailAsync(form.Email);
+            if(emailExist != null)
+            {
+                return BadRequest("email already exists");
+            }
             var user = new IdentityUser()
             {
                 UserName = form.Username,
-
+                Email=form.Email,
             };
             var createUserResult= await userManager.CreateAsync(user, form.Password);
-            if(!createUserResult.Succeeded)
+            if(createUserResult.Succeeded)
+            {
+                string returnedToken = GenerateJwtToken(user);
+                return Ok(new RegistrationLoginResponse()
+                {
+                    isSuccess=true,
+                    Token=returnedToken,
+                });
+            }
+            else
             {
                 return BadRequest();
             }
-            await signInManager.SignInAsync(user, true);
-            return Ok();
+
             
 
         }
@@ -64,11 +84,18 @@ namespace MoviesProject.Controllers
         [HttpPost("auth/login")]
         public async Task<IActionResult> Login(LoginForm form)
         {
-           var result= await signInManager.PasswordSignInAsync(form.Username,form.Password, true,false);
-            if(result.Succeeded) {
-                return Ok();
+            var emailExists =await  userManager.FindByEmailAsync(form.Email);
+            if (emailExists==null)
+            {
+                return BadRequest("email or password is wrong");
             }
-            return BadRequest();
+            var passwordCorrect=await userManager.CheckPasswordAsync(emailExists,form.Password);
+            if (!passwordCorrect)
+            {
+                return BadRequest("email or password is wrong");
+            }
+            var token = GenerateJwtToken(emailExists);
+            return Ok(new RegistrationLoginResponse() { isSuccess = true, Token = token });
         }
 
 
@@ -83,16 +110,46 @@ namespace MoviesProject.Controllers
         public void Delete(int id)
         {
         }
+        [NonAction]
+        public string GenerateJwtToken(IdentityUser user)
+        {
+            var jwtTokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_jwtConfig.Secret);
+            var tokenDescriptor = new SecurityTokenDescriptor()
+            {
+                Subject = new ClaimsIdentity(new[] {
+                    new Claim("id", user.Id),
+                    new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+                    new Claim(JwtRegisteredClaimNames.Email, user.Email),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                }
+                ),
+                Expires = DateTime.UtcNow.AddHours(5),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key)
+                ,SecurityAlgorithms.HmacSha256)
+            };
+            var token = jwtTokenHandler.CreateToken(tokenDescriptor);
+            var jwtToken=jwtTokenHandler.WriteToken(token);
+            return jwtToken;
+
+    }
     }
     public class LoginForm
     {
-        public string Username { get; set; }
+        public string Email { get; set; }
         public string Password { get; set; }
     }
     public class RegisterForm
     {
         public string Username { get; set; }
+        public string Email { get; set; }
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
     }
+    public class RegistrationLoginResponse
+    {
+        public bool isSuccess { get; set; }
+        public string Token { get; set; }
+    }
+
 }
