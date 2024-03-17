@@ -15,17 +15,20 @@ namespace MoviesProject.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
+        RoleManager<IdentityRole> roleManager;
         UserManager<IdentityUser> userManager;
         SignInManager<IdentityUser> signInManager;
         private readonly IHttpContextAccessor httpContextAccessor;
         JwtConfig _jwtConfig;
         public AuthController(SignInManager<IdentityUser> _signInManager,
             UserManager<IdentityUser> _userManager, IHttpContextAccessor _httpContextAccessor, 
-            IOptionsMonitor<JwtConfig> _optionsMonitor) {
+            IOptionsMonitor<JwtConfig> _optionsMonitor, RoleManager<IdentityRole> roolemanager)
+        {
             userManager = _userManager;
             signInManager = _signInManager;
             httpContextAccessor = _httpContextAccessor;
             _jwtConfig = _optionsMonitor.CurrentValue;
+            roleManager = roolemanager;
         }
         // GET: api/<AuthController>
         [HttpGet("auth/logout")]
@@ -64,7 +67,7 @@ namespace MoviesProject.Controllers
             var createUserResult= await userManager.CreateAsync(user, form.Password);
             if(createUserResult.Succeeded)
             {
-                string returnedToken = GenerateJwtToken(user);
+                string returnedToken = GenerateJwtToken(user, null);
                 return Ok(new RegistrationLoginResponse()
                 {
                     isSuccess=true,
@@ -94,7 +97,8 @@ namespace MoviesProject.Controllers
             {
                 return BadRequest("email or password is wrong");
             }
-            var token = GenerateJwtToken(emailExists);
+            var userRoles = await userManager.GetRolesAsync(emailExists);
+            var token = GenerateJwtToken(emailExists, userRoles);
             return Ok(new RegistrationLoginResponse() { isSuccess = true, Token = token });
         }
 
@@ -110,20 +114,58 @@ namespace MoviesProject.Controllers
         public void Delete(int id)
         {
         }
+        [HttpPost("auth/createrole")]
+        public async Task<IActionResult> CreateRole(string roleName)
+        {
+
+                if (!await roleManager.RoleExistsAsync(roleName))
+                {
+                    await roleManager.CreateAsync(new IdentityRole(roleName));
+                }
+            
+            return Ok();
+
+        }
+        [HttpPost("auth/assignusertorole")]
+        public async Task<IActionResult> AssignRole(string userId, string roleName)
+        {
+
+            var user = await userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
+
+            var result = await userManager.AddToRoleAsync(user, roleName);
+            if (!result.Succeeded)
+            {
+                return BadRequest(result.Errors); 
+            }
+
+            return Ok("Role assigned successfully.");
+        }
         [NonAction]
-        public string GenerateJwtToken(IdentityUser user)
+        public string GenerateJwtToken(IdentityUser user, IList<string>? userRoles)
         {
             var jwtTokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_jwtConfig.Secret);
+            var claims = new List<Claim>()
+              {
+                new Claim("id", user.Id),
+                new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+                new Claim(JwtRegisteredClaimNames.Email, user.Email),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+              };
+            if (userRoles != null && userRoles.Any())
+            {
+                foreach (var role in userRoles)
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, role));
+                }
+            }
             var tokenDescriptor = new SecurityTokenDescriptor()
             {
-                Subject = new ClaimsIdentity(new[] {
-                    new Claim("id", user.Id),
-                    new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
-                    new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-                }
-                ),
+                Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.UtcNow.AddHours(5),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key)
                 ,SecurityAlgorithms.HmacSha256)

@@ -30,7 +30,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 {
     options.SignIn.RequireConfirmedAccount = false;
-}).AddEntityFrameworkStores<AuthDBContext>();
+}).AddRoles<IdentityRole>().AddEntityFrameworkStores<AuthDBContext>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddDbContext<MovieDBContext>(); 
