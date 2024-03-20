@@ -34,7 +34,7 @@ namespace MoviesProject.Controllers
                 searchGenre, orderColumn, orderBy);
             return Ok(movies);
         }
-        //[Authorize(Roles ="Admin")]
+        [Authorize]
 
         [HttpGet("GetAllMoviesByPage")]
         public async Task<IActionResult> GetAllMoviesPaginated([Range(1, int.MaxValue)] int page = 1, int pageSize = 5,

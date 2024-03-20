@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "A4o1cgH7iFCyrrMkwsMjrHEbaorq0J2NZRTBL6+a33c=",
+  "Hash": "h2DJjit1iX1UAwq5D4yTI8ane7Gq5D19V8Tzfb+c7Q0=",
   "Source": "MoviesProject",
   "BasePath": "_content/MoviesProject",
   "Mode": "Default",
@@ -1231,6 +1231,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\images\\1ec00455-1232-4433-8f3c-ba2dcafb5f80\\image.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\awhamed\\source\\repos\\MoviesProject\\MoviesProject\\wwwroot\\uploads\\images\\20975350-19cd-4bf3-87b2-228c043980d4\\image.jpg",
+      "SourceId": "MoviesProject",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\awhamed\\source\\repos\\MoviesProject\\MoviesProject\\wwwroot\\",
+      "BasePath": "_content/MoviesProject",
+      "RelativePath": "uploads/images/20975350-19cd-4bf3-87b2-228c043980d4/image.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\images\\20975350-19cd-4bf3-87b2-228c043980d4\\image.jpg"
     },
     {
       "Identity": "C:\\Users\\awhamed\\source\\repos\\MoviesProject\\MoviesProject\\wwwroot\\uploads\\images\\3c594af0-4651-4b67-b239-266b34b9d9b2\\image.jpg",

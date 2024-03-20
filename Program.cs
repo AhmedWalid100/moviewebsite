@@ -7,6 +7,7 @@ using Microsoft.OpenApi.Models;
 using MoviesProject.Application;
 using MoviesProject.Config;
 using MoviesProject.DomainLayer.Interfaces;
+using MoviesProject.DomainLayer.Models;
 using MoviesProject.Extensions;
 using MoviesProject.Infrastructure.DBContext;
 using MoviesProject.Infrastructure.Repos;
@@ -27,7 +28,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 {
     options.SignIn.RequireConfirmedAccount = false;
 }).AddRoles<IdentityRole>().AddEntityFrameworkStores<AuthDBContext>();
@@ -66,8 +67,9 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(key),
         ValidateIssuer = false,
         ValidateAudience = false,
-        RequireExpirationTime = false,
-        ValidateLifetime = false,
+        RequireExpirationTime = true,
+        ValidateLifetime = true,
+        ClockSkew=TimeSpan.Zero,
     };
 });
 var app = builder.Build();
