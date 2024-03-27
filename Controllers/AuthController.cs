@@ -39,7 +39,13 @@ namespace MoviesProject.Controllers
         [HttpGet("auth/logout")]
         public async Task<IActionResult> LogOut()
         {
-            await signInManager.SignOutAsync();
+            var cookieOptions = new CookieOptions()
+            {
+                HttpOnly = false,
+                SameSite = SameSiteMode.Lax,
+                Secure = true
+            };
+            Response.Cookies.Append("refreshToken", "Logged Out", cookieOptions);
             return Ok();
         }
         [HttpGet("auth/user")]
@@ -59,10 +65,23 @@ namespace MoviesProject.Controllers
             if (form.Password != form.ConfirmPassword) {
                 return BadRequest();
             }
+            var nameExist = await userManager.FindByNameAsync(form.Username);
+            if (nameExist != null)
+            {
+                return Ok(new RegistrationLoginResponse()
+                {
+                    isSuccess = false,
+                    message = "name already exists"
+                });
+            }
             var emailExist= await userManager.FindByEmailAsync(form.Email);
             if(emailExist != null)
             {
-                return BadRequest("email already exists");
+                return Ok(new RegistrationLoginResponse()
+                {
+                    isSuccess = false,
+                    message="email already exists"
+                });
             }
             var user = new ApplicationUser()
             {
@@ -97,12 +116,20 @@ namespace MoviesProject.Controllers
             var emailExists =await  userManager.FindByEmailAsync(form.Email);
             if (emailExists==null)
             {
-                return BadRequest("email or password is wrong");
+                return Ok(new RegistrationLoginResponse()
+                {
+                    isSuccess = false,
+                    message = "Email or Password is wrong"
+                });
             }
             var passwordCorrect=await userManager.CheckPasswordAsync(emailExists,form.Password);
             if (!passwordCorrect)
             {
-                return BadRequest("email or password is wrong");
+                return Ok(new RegistrationLoginResponse()
+                {
+                    isSuccess = false,
+                    message = "Email or Password is wrong"
+                });
             }
             var userRoles = await userManager.GetRolesAsync(emailExists);
             var token = GenerateJwtToken(emailExists, userRoles);
@@ -229,7 +256,7 @@ namespace MoviesProject.Controllers
             var tokenDescriptor = new SecurityTokenDescriptor()
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddSeconds(60),
+                Expires = DateTime.UtcNow.AddMinutes(15),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key)
                 ,SecurityAlgorithms.HmacSha256)
             };
@@ -258,8 +285,10 @@ namespace MoviesProject.Controllers
         {
             var cookieOptions = new CookieOptions()
             {
-                HttpOnly = true,
+               HttpOnly = false,
                 Expires = expiresOn.ToLocalTime(),
+                SameSite=SameSiteMode.Lax,
+                Secure= true
             };
             Response.Cookies.Append("refreshToken", refreshToken, cookieOptions);
         }
@@ -281,6 +310,7 @@ namespace MoviesProject.Controllers
     public class RegistrationLoginResponse
     {
         public bool isSuccess { get; set; }
+        public string message { get; set; }
         public string Token { get; set; }
         [JsonIgnore]
         public string refreshToken { get; set; }

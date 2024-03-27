@@ -34,7 +34,7 @@ namespace MoviesProject.Controllers
                 searchGenre, orderColumn, orderBy);
             return Ok(movies);
         }
-        [Authorize]
+
 
         [HttpGet("GetAllMoviesByPage")]
         public async Task<IActionResult> GetAllMoviesPaginated([Range(1, int.MaxValue)] int page = 1, int pageSize = 5,
@@ -55,6 +55,7 @@ namespace MoviesProject.Controllers
         }
 
         // POST api/<MovieController>
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] MovieCreateCommand movieCommand)
         {
@@ -65,6 +66,7 @@ namespace MoviesProject.Controllers
 
 
         // PUT api/<MovieController>/5
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] MovieCreateCommand movie)
         {
@@ -73,6 +75,7 @@ namespace MoviesProject.Controllers
         }
 
         // DELETE api/<MovieController>/5
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -80,6 +83,7 @@ namespace MoviesProject.Controllers
             return Ok("\"" + "Success" + "\"");
             //_moviecommandhandler.DeleteMovieAsync(id);
         }
+        [Authorize(Roles = "Admin")]
         [HttpPut("AddActorToMovie")]
         public async Task<IActionResult> AddActorToMovie(int movieID, int actorID)
         {

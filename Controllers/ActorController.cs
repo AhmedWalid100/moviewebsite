@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MoviesProject.Application;
 using MoviesProject.Application.Commands;
 using MoviesProject.DomainLayer.Interfaces;
@@ -35,6 +36,7 @@ namespace MoviesProject.Controllers
             return Ok(_actorQueryHandler.GetActorById(id));
         }
 
+        [Authorize(Roles = "Admin")]
         // POST api/<ActorController>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] ActorCreateCommand actorCommand)
@@ -44,6 +46,7 @@ namespace MoviesProject.Controllers
         }
 
         // PUT api/<ActorController>/5
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task Put(int id, [FromBody] ActorCreateCommand actorCommand)
         {
@@ -51,6 +54,7 @@ namespace MoviesProject.Controllers
         }
 
         // DELETE api/<ActorController>/5
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task Delete(int id)
         {

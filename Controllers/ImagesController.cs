@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -32,6 +33,7 @@ namespace MoviesProject.Controllers
         }
 
         // POST api/<ImagesController>
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> UploadMovieImageAsync(IFormFile formFile)
         {
