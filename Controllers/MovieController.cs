@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MoviesProject.Application;
 using MoviesProject.Application.Commands;
+using MoviesProject.Application.ResponseModels;
 using MoviesProject.DomainLayer.Aggregates;
 using MoviesProject.DomainLayer.Interfaces;
 using MoviesProject.Infrastructure.DBContext;
@@ -80,7 +81,11 @@ namespace MoviesProject.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             await _moviecommandhandler.DeleteMovieAsync(id);
-            return Ok("\"" + "Success" + "\"");
+            return Ok(new CreateResponse<MovieDTO>()
+            {
+                isSuccess=true,
+                message="Deleted Successfully"
+            });
             //_moviecommandhandler.DeleteMovieAsync(id);
         }
         [Authorize(Roles = "Admin")]
@@ -88,7 +93,11 @@ namespace MoviesProject.Controllers
         public async Task<IActionResult> AddActorToMovie(int movieID, int actorID)
         {
             await _moviecommandhandler.AddMovieActor(movieID, actorID);
-            return Ok("\"" + "Success" + "\"");
+            return Ok(new CreateResponse<MovieDTO>()
+            {
+                isSuccess = true,
+                message = "Added Successfully"
+            });
         }
         [HttpGet("GetMovieActors/{id}")]
         public IActionResult GetActorsByMovieID(int id)
@@ -100,7 +109,11 @@ namespace MoviesProject.Controllers
         public async Task<IActionResult> DeleteMovieActor(int movieID, int actorID)
         {
             await _moviecommandhandler.RemoveMovieActor(movieID, actorID);
-            return Ok("\"" + "Success" + "\"");
+            return Ok(new CreateResponse<MovieDTO>()
+            {
+                isSuccess = true,
+                message = "Deleted Successfully"
+            });
         }
 
     }

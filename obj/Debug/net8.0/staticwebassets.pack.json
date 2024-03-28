@@ -89,6 +89,10 @@
       "PackagePath": "staticwebassets\\uploads\\images\\ebbc6827-24e9-4aea-8548-a8e67e8e437a\\image.jpg"
     },
     {
+      "Id": "C:\\Users\\awhamed\\source\\repos\\MoviesProject\\MoviesProject\\wwwroot\\uploads\\images\\f3130c6b-5ca1-44d7-baa0-dd600f9c1b28\\image.jpg",
+      "PackagePath": "staticwebassets\\uploads\\images\\f3130c6b-5ca1-44d7-baa0-dd600f9c1b28\\image.jpg"
+    },
+    {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.MoviesProject.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },
